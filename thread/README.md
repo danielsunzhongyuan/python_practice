@@ -1,4 +1,5 @@
 # 多线程
+http://python.jobbole.com/88411/
 
 Python是支持多线程的，主要通过***thread***和***threading***两个模块来实现的。
 ***thread***模块是比较底层的模块，而***threading***模块则是对thread进行了一些包装，更加方便使用。
@@ -38,29 +39,7 @@ lock.locked() #获取当前锁的状态
 ```
 
 #### 样例
-```python
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
-
-import thread
-import time
-
-def print_time(thread_name, delay):
-    count = 0
-    while count < 5:
-        time.sleep(delay)
-        count += 1
-        print "%s : %s" % (thread_name, time.ctime(time.time()))
-
-try:
-    thread.start_new_thread(print_time, ("Thread-1", 2, ))
-    thread.start_new_thread(print_time, ("Thread-2", 4, ))
-except:
-    print "Error: unable to start the thread"
-
-while True:
-    pass
-```
+thread_sample.py
 
 # threading模块
 >python的threading模块是对thread做了一些包装的，可以更加方便的被使用。
@@ -118,160 +97,68 @@ threading.Thread(group = None, target = None, name = None, args = (), kwars = {}
 ```
 
 ###### 样例
-```python
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
- 
-import threading
-import time
- 
-def test_thread(count) :
-    while count > 0 :
-        print "count = %d" % count
-        count = count - 1
-        time.sleep(1)
- 
-def main() :
-    my_thread = threading.Thread(target = test_thread, args = (10, ))
-    my_thread.start()
-    my_thread.join()
- 
-if __name__ == '__main__':
-    main()
-```
+threading_sample.py
 
 #### 常用多线程写法
 1. 固定线程运行的函数
-```python
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
- 
-import threading, thread
-import time
- 
- 
-class MyThread(threading.Thread):
-    """docstring for MyThread"""
- 
-    def __init__(self, thread_id, name, counter) :
-        super(MyThread, self).__init__()  #调用父类的构造函数 
-        self.thread_id = thread_id
-        self.name = name
-        self.counter = counter
- 
-    def run(self) :
-        print "Starting " + self.name
-        print_time(self.name, self.counter, 5)
-        print "Exiting " + self.name
- 
-def print_time(thread_name, delay, counter) :
-    while counter :
-        time.sleep(delay)
-        print "%s %s" % (thread_name, time.ctime(time.time()))
-        counter -= 1
- 
-def main():
-    #创建新的线程
-    thread1 = MyThread(1, "Thread-1", 1)
-    thread2 = MyThread(2, "Thread-2", 2)
- 
-    #开启线程
-    thread1.start()
-    thread2.start()
- 
- 
-    thread1.join()
-    thread2.join()
-    print "Exiting Main Thread"
- 
-if __name__ == '__main__':
-    main()
-```
+fixed_thread.py
 
 2. 外部传入线程运行的函数
-```python
-#/usr/bin/env python
-# -*- coding: utf-8 -*-
-import threading
-import time
- 
-class MyThread(threading.Thread):
-    """
-    属性:
-    target: 传入外部函数, 用户线程调用
-    args: 函数参数
-    """
-    def __init__(self, target, args):
-        super(MyThread, self).__init__()  #调用父类的构造函数 
-        self.target = target
-        self.args = args
- 
-    def run(self) :
-        self.target(self.args)
- 
-def print_time(counter) :
-    while counter :
-        print "counter = %d" % counter
-        counter -= 1
-        time.sleep(1)
- 
-def main() :
-    my_thread = MyThread(print_time, 10)
-    my_thread.start()
-    my_thread.join()
- 
-if __name__ == '__main__':
-    main()
-```
+outside_function_thread.py
 
 #### 生产者消费者问题
 >试着用python写了一个生产者消费者问题(伪生产者消费者), 
 只是使用简单的锁, 感觉有点不太对, 下面另一个程序会写出正确的生产者消费者问题
 
+producer_consumer_1.py
+
+杀死多线程程序方法: 使用control + z挂起程序(程序依然在后台, 可以使用ps aux查看), 
+使用了wait()和notify()来解决上述问题
+
+>当然最简答的方法是直接使用Queue，Queue封装了Condition的行为, 
+如wait(), notify(), acquire(), 没看文档就这样, 使用了Queue竟然不知道封装了这些函数
+
+producer_consumer_2.py
+
+#### 简单锁
+
+>如果只是简单的加锁解锁可以直接使用threading.Lock()生成锁对象, 然后使用acquire()和release()方法
+样例
+simple_lock.py
+
+#### Condition
+>如果是向生产者消费者类似的情形, 使用Condition类 或者直接使用Queue模块
+
+条件变量中有acquire()和release方法用来调用锁的方法, 有wait(), notify(), notifyAll()方法, 后面是三个方法必须在获取锁的情况下调用, 否则产生RuntimeError错误.
+* 当一个线程获得锁后, 发现没有期望的资源或者状态, 就会调用wait()阻塞, 并释放已经获得锁, 知道期望的资源或者状态发生改变
+* 当一个线程获得锁, 改变了资源或者状态, 就会调用notify()和notifyAll()去通知其他线程
+
 ```python
-#!/usr/bin/env python
-# -*- coding:utf-8 -*-
+#官方文档中提供的生产者消费者模型
+# Consume one item
+cv.acquire()
+while not an_item_is_available():
+    cv.wait()
+get_an_available_item()
+cv.release()
+ 
+# Produce one item
+cv.acquire()
+make_an_item_available()
+cv.notify()
+cv.release()
+```
 
-import thread, threading
-import urllib2
-import time, random
-import Queue
-
-share_queue = Queue.Queue()
-my_lock = thread.allocate_lock()
-class Producer(threading.Thread):
-    def run(self):
-        products = range(5)
-        global share_queue
-        while True:
-            num = random.choice(products)
-            my_lock.acquire()
-            share_queue.put(num)
-            print "Produce : ", num
-            my_lock.release()
-            time.sleep(random.random())
-
-class Consumer(threading.Thread):
-    def run(self):
-        global share_queue
-        while True:
-            my_lock.acquire()
-            if share_queue.empty():
-                print "Queue is Empty..."
-                my_lock.release()
-                time.sleep(random.random())
-                continue
-            num = share_queue.get()
-            print "Consumer : ", num
-            my_lock.release()
-            time.sleep(random.random())
-
-def main():
-    producer = Producer()
-    consumer = Consumer()
-    producer.start()
-    consumer.start()
-
-if __name__ == '__main__':
-    main()
+```python
+#threading.Condition类
+thread.Condition([lock])
+可选参数lock: 必须是Lock或者RLock对象, 并被作为underlying锁(悲观锁?), 否则, 会创建一个新的RLock对象作为underlying锁
+ 
+类方法:
+acquire()  #获得锁
+release()  #释放锁
+wait([timeout])  #持续等待直到被notify()或者notifyAll()通知或者超时(必须先获得锁),
+#wait()所做操作, 先释放获得的锁, 然后阻塞, 知道被notify或者notifyAll唤醒或者超时, 一旦被唤醒或者超时, 会重新获取锁(应该说抢锁), 然后返回
+notify()  #唤醒一个wait()阻塞的线程.
+notify_all()或者notifyAll()  #唤醒所有阻塞的线程
 ```
