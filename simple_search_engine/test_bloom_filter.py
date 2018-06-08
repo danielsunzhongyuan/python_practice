@@ -33,6 +33,7 @@ def splunk_test():
     for event in s.search('ip'):
         print event
 
+
 def splunk_multi_test():
     s = SplunkM()
     s.add_event('src_ip = 1.2.3.4')
@@ -44,6 +45,7 @@ def splunk_multi_test():
     print '***********'
     for event in s.search_any(['src_ip', 'dst_ip']):
         print event
+
 
 def main():
     bf_test()
