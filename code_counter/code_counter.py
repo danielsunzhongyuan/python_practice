@@ -36,7 +36,7 @@ def main():
     parser.add_option("-s", "--suffix", dest="suffix", help="suffix of code, like go|java|py etc.")
     options, args = parser.parse_args()
     files = []
-    path = options.path if options.path else "/Users/zsun/go/src/gangas-view-new"
+    path = options.path if options.path else "."
 
     if options.exclude_folders:
         exclude_folders = options.exclude_folders.split(",")
