@@ -1,5 +1,6 @@
 # -*- encoding=utf-8 -*-
 
+
 class Fib(object):
     def __init__(self):
         self.a, self.b = 0, 1
@@ -28,4 +29,3 @@ class Fib(object):
                     L.append(a)
                 a, b = b, a + b
             return L
-
