@@ -10,7 +10,14 @@
 #
 # The function is expected to return an INTEGER.
 # The function accepts STRING_ARRAY zombies as parameter.
-#
+# 僵尸之间能联系起来的分成一组，要找总共有几组？
+
+# 样例：
+# 1000
+# 0110
+# 0110
+# 0001
+# 这里总共有3组，分别是(0),(1,2),(3)
 
 def zombieCluster(zombies):
     # Write your code here
