@@ -8,8 +8,9 @@
 #
 # http://www.brpreiss.com/books/opus7/programs/pgm0A_05.txt
 #
-class Complex(object):
 
+
+class Complex(object):
     def __add__(self, c):
         return Complex(self.real + c.real, self.imag + c.imag)
 
@@ -17,7 +18,7 @@ class Complex(object):
         return Complex(self.real - c.real, self.imag - c.imag)
 
     def __mul__(self, c):
-	return Complex(self.real * c.real - self.imag * c.imag,
-	    self.real * c.imag + self.imag * c.real)
+        return Complex(self.real * c.real - self.imag * c.imag,
+                       self.real * c.imag + self.imag * c.real)
 
-    # ...
+        # ...

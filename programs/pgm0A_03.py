@@ -8,24 +8,27 @@
 #
 # http://www.brpreiss.com/books/opus7/programs/pgm0A_03.txt
 #
-class Complex(object):
 
-    def getReal(self):
+
+class Complex(object):
+    def get_real(self):
         return self._real
-    def setReal(self, value):
+
+    def set_real(self, value):
         self._real = value
 
     real = property(
-        fget = getReal,
-        fset = setReal)
+        fget=get_real,
+        fset=set_real)
 
-    def getImag(self):
+    def get_imag(self):
         return self._imag
-    def setImag(self, value):
+
+    def set_imag(self, value):
         self._imag = value
 
     imag = property(
-        fget = getImag,
-        fset = setImag)
+        fget=get_imag,
+        fset=set_imag)
 
     # ...

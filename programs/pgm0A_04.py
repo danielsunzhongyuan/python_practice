@@ -8,11 +8,15 @@
 #
 # http://www.brpreiss.com/books/opus7/programs/pgm0A_04.txt
 #
-class Complex(object):
 
+
+import math
+
+
+class Complex(object):
     def getR(self):
         return math.sqrt(self._real * self._real
-	    + self._imag * self._imag)
+                         + self._imag * self._imag)
 
     def setR(self, value):
         theta = self.theta
@@ -20,8 +24,8 @@ class Complex(object):
         self._imag = value * math.sin(theta)
 
     r = property(
-        fget = getR,
-        fset = setR)
+        fget=getR,
+        fset=setR)
 
     def getTheta(self):
         return math.atan2(self._imag, self._real)
@@ -32,7 +36,7 @@ class Complex(object):
         self._imag = r * math.sin(value)
 
     theta = property(
-        fget = getTheta,
-        fset = setTheta)
+        fget=getTheta,
+        fset=setTheta)
 
     # ...

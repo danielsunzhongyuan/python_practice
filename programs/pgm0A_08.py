@@ -8,8 +8,9 @@
 #
 # http://www.brpreiss.com/books/opus7/programs/pgm0A_08.txt
 #
-class Parent(Person):
 
+
+class Parent(Person):
     def __init__(self, name, sex, children):
         super(Parent, self).__init__(name, sex)
         self._children = children
@@ -18,4 +19,5 @@ class Parent(Person):
         return self._children[i]
 
     def __str__(self):
+        return self._children
         # ...

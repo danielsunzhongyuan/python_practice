@@ -8,14 +8,16 @@
 #
 # http://www.brpreiss.com/books/opus7/programs/pgm0A_09.txt
 #
-class GraphicalObject(Object):
 
+
+class GraphicalObject(object):
     def __init__(self, center):
         super(GraphicalObject, self).__init__()
         self._center = center
 
     def draw(self):
         pass
+
     draw = abstractmethod(draw)
 
     def erase(self):

@@ -8,10 +8,11 @@
 #
 # http://www.brpreiss.com/books/opus7/programs/pgm0A_02.txt
 #
-class Complex(object):
 
+
+class Complex(object):
     def __init__(self, real, imag):
         self._real = real
         self._imag = imag
 
-    # ...
+        # ...

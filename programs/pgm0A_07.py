@@ -8,8 +8,9 @@
 #
 # http://www.brpreiss.com/books/opus7/programs/pgm0A_07.txt
 #
-class Person(object):
 
+
+class Person(object):
     FEMALE = 0
     MALE = 1
 

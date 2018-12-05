@@ -8,12 +8,13 @@
 #
 # http://www.brpreiss.com/books/opus7/programs/pgm0A_12.txt
 #
-class Rectangle(GraphicalObject):
 
+
+class Rectangle(GraphicalObject):
     def __init__(self, center, height, width):
         super(Rectangle, self).__init__(center)
         self._height = height
         self._width = width
 
     def draw(self):
-        # ...
+        pass

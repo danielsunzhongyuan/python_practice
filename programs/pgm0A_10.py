@@ -8,6 +8,8 @@
 #
 # http://www.brpreiss.com/books/opus7/programs/pgm0A_10.txt
 #
+
+
 class Point(object):
 
     def __init__(self, x, y):
