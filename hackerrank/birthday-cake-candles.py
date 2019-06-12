@@ -6,13 +6,13 @@
 # @Author   : Zhongyuan Sun
 
 
-def birthdayCakeCandles(ar):
+def birthday_cake_candles(ar):
     m = max(ar)
     return ar.count(m)
 
 
 def main():
-    print birthdayCakeCandles([3, 1, 2, 3])
+    print birthday_cake_candles([3, 1, 2, 3])
 
 
 if __name__ == "__main__":
